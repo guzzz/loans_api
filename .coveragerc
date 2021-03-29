@@ -1,0 +1,69 @@
+# .coveragerc to control coverage.py
+[run]
+branch = False
+omit =
+		manage.py
+        */__init__.py
+        */urls.py
+        */wsgi.py
+        */migrations/*
+        */commands/*
+        */admin.py
+        */apps.py
+        */choices.py
+        */mixins.py
+        */settings.py
+        */forms.py
+        */asgi.py
+        */schema.py
+        */db_views.py
+        */routers.py
+        */test/*
+        */users/*
+        */filter_backends.py
+
+[report]
+omit =
+		manage.py
+        */__init__.py
+        */urls.py
+        */wsgi.py
+        */migrations/*
+        */commands/*
+        */admin.py
+        */apps.py
+        */choices.py
+        */mixins.py
+        */settings.py
+        */forms.py
+        */asgi.py
+        */schema.py
+        */db_views.py
+        */routers.py
+        */test/*
+        */users/*
+        */filter_backends.py
+
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug-only code:
+    def __repr__
+    if self\.debug
+
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+
+ignore_errors = True
+
+[html]
+
+
+directory = coverage_html_report

@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  nginx:
+    build: ./config/nginx
+    ports:
+      - 8000:80
+    volumes:
+      - django-static:/usr/src/app/static
+    depends_on:
+      - api
+    restart: "on-failure"
+
+  api:
+    build:
+      context: .
+      args:
+        release: dev
+    command: sh -c "gunicorn config.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - ./:/usr/src/app
+      - django-media:/usr/src/app/media
+      - django-static:/usr/src/app/static
+    env_file:
+      - develop.env
+    image: loans_api
+
+    expose:
+      - 8000
+    restart: "on-failure"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13.0
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+volumes:
+  django-media:
+  django-static:
+  postgres-data:
+
+networks:
+    default:
+        external:
+            name: loans_net
